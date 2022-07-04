@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>IDEA - Tag - steins‘s tech</title>
+        <link>https://steins4.github.io/tags/idea/</link>
+        <description>IDEA - Tag - steins‘s tech</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wbw3217@outlook.com (steins)</managingEditor>
+            <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Mon, 04 Jul 2022 15:55:32 &#43;0800</lastBuildDate><atom:link href="https://steins4.github.io/tags/idea/" rel="self" type="application/rss+xml" /><item>
+    <title>Idea使用技巧</title>
+    <link>https://steins4.github.io/posts/idea%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/idea%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+    <pubDate>Mon, 04 Jul 2022 15:55:32 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>https://steins4.github.io/posts/idea%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/idea%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+    <description><![CDATA[IntelliJ IDEA使用技巧]]></description>
+</item>
+</channel>
+</rss>
