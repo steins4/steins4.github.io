@@ -1,10 +1,26 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>steins‘s tech</title>
-        <link>https://steins4.github.io/</link>
+        <link>http://example.org/</link>
         <description>This is my cool site</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wbw3217@outlook.com (steins)</managingEditor>
-            <webMaster>wbw3217@outlook.com (steins)</webMaster>
-            <atom:link href="https://steins4.github.io/index.xml" rel="self" type="application/rss+xml" />
-        </channel>
+            <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Mon, 04 Jul 2022 15:55:32 &#43;0800</lastBuildDate>
+            <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>Idea使用技巧</title>
+    <link>http://example.org/posts/idea%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/idea%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+    <pubDate>Mon, 04 Jul 2022 15:55:32 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>http://example.org/posts/idea%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/idea%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+    <description><![CDATA[IntelliJ IDEA使用技巧 跳转 项目(IDEA窗口之间的前后跳转)跳转 ⌥⌘]:切换到下一个窗口 ⌥⌘[: 切换到上一个窗口 文件之间的跳转 ⌘E 跳转到上次编辑]]></description>
+</item>
+<item>
+    <title>Hugo&#43;github博客搭建</title>
+    <link>http://example.org/posts/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/hugo&#43;github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
+    <pubDate>Tue, 28 Jun 2022 10:55:13 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>http://example.org/posts/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/hugo&#43;github%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</guid>
+    <description><![CDATA[hugo+github博客搭建 ​ 所有的步骤都是在mac os环境中进行的。 brew安装hugo brew install hugo 使用brew直接安装hugo，然后通过输入]]></description>
+</item>
+</channel>
 </rss>

@@ -1,8 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Categories - Category - steins‘s tech</title>
-        <link>https://steins4.github.io/categories/</link>
+        <link>http://example.org/categories/</link>
         <description>Categories - Category - steins‘s tech</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wbw3217@outlook.com (steins)</managingEditor>
-            <webMaster>wbw3217@outlook.com (steins)</webMaster><atom:link href="https://steins4.github.io/categories/" rel="self" type="application/rss+xml" /></channel>
+            <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Mon, 04 Jul 2022 15:55:32 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>IDEA</title>
+    <link>http://example.org/categories/idea/</link>
+    <pubDate>Mon, 04 Jul 2022 15:55:32 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>http://example.org/categories/idea/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
 </rss>
