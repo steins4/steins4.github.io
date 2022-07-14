@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Shell - Tag - steins‘s tech</title>
+        <link>http://example.org/tags/shell/</link>
+        <description>Shell - Tag - steins‘s tech</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wbw3217@outlook.com (steins)</managingEditor>
+            <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Thu, 14 Jul 2022 17:08:37 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/shell/" rel="self" type="application/rss+xml" /><item>
+    <title>Shell</title>
+    <link>http://example.org/posts/shell/shell/</link>
+    <pubDate>Thu, 14 Jul 2022 17:08:37 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>http://example.org/posts/shell/shell/</guid>
+    <description><![CDATA[Shell脚本 本文所说的脚本是以sh为后缀名的脚本 运行方法 第一种方法使用chmod +x ./test.sh让脚本具有执行能力，然后使用./tes]]></description>
+</item>
+</channel>
+</rss>

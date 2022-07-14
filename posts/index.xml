@@ -4,7 +4,15 @@
         <link>http://example.org/posts/</link>
         <description>All Posts | steins‘s tech</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wbw3217@outlook.com (steins)</managingEditor>
-            <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Mon, 04 Jul 2022 15:55:32 &#43;0800</lastBuildDate><atom:link href="http://example.org/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Thu, 14 Jul 2022 17:08:37 &#43;0800</lastBuildDate><atom:link href="http://example.org/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Shell</title>
+    <link>http://example.org/posts/shell/shell/</link>
+    <pubDate>Thu, 14 Jul 2022 17:08:37 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>http://example.org/posts/shell/shell/</guid>
+    <description><![CDATA[Shell脚本 本文所说的脚本是以sh为后缀名的脚本 运行方法 第一种方法使用chmod +x ./test.sh让脚本具有执行能力，然后使用./tes]]></description>
+</item>
+<item>
     <title>Idea使用技巧</title>
     <link>http://example.org/posts/idea%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/idea%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
     <pubDate>Mon, 04 Jul 2022 15:55:32 &#43;0800</pubDate>
