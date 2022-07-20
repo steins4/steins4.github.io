@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>learning - Tag - steins‘s tech</title>
+        <link>http://example.org/tags/learning/</link>
+        <description>learning - Tag - steins‘s tech</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wbw3217@outlook.com (steins)</managingEditor>
+            <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Thu, 14 Jul 2022 17:08:37 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/learning/" rel="self" type="application/rss+xml" /><item>
+    <title>RocketMQ入门（1）：架构和设计</title>
+    <link>http://example.org/posts/rocketmq/rocketmq%E5%85%A5%E9%97%A81%E6%9E%B6%E6%9E%84%E5%92%8C%E8%AE%BE%E8%AE%A1/</link>
+    <pubDate>Thu, 14 Jul 2022 17:08:37 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>http://example.org/posts/rocketmq/rocketmq%E5%85%A5%E9%97%A81%E6%9E%B6%E6%9E%84%E5%92%8C%E8%AE%BE%E8%AE%A1/</guid>
+    <description><![CDATA[RocketMQ入门（1）：架构和设计 技术架构 RocketMQ分为四部分 Producer 消息发布的角色，也是业务服务器。Producer根据MQ的负载均衡]]></description>
+</item>
+</channel>
+</rss>

@@ -4,7 +4,15 @@
         <link>http://example.org/categories/</link>
         <description>Categories - Category - steins‘s tech</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wbw3217@outlook.com (steins)</managingEditor>
-            <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Mon, 04 Jul 2022 15:55:32 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Thu, 14 Jul 2022 17:08:37 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>RocketMQ</title>
+    <link>http://example.org/categories/rocketmq/</link>
+    <pubDate>Thu, 14 Jul 2022 17:08:37 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>http://example.org/categories/rocketmq/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>IDEA</title>
     <link>http://example.org/categories/idea/</link>
     <pubDate>Mon, 04 Jul 2022 15:55:32 &#43;0800</pubDate>
