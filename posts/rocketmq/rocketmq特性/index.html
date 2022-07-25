@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>RcoketMQ入门（2） - steins‘s tech</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="RcoketMQ入门（2）" />
+<meta property="og:description" content="RocketMQ使用场景 应用解耦 流量削峰 数据分发 RocketMQ特性 订阅与发布 消息的发布是指某个生产者向某个topic发送消息，消息的订阅是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/posts/rocketmq/rocketmq%E7%89%B9%E6%80%A7/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-07-25T00:00:00+00:00" /><meta property="og:site_name" content="My cool site" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="RcoketMQ入门（2）"/>
+<meta name="twitter:description" content="RocketMQ使用场景 应用解耦 流量削峰 数据分发 RocketMQ特性 订阅与发布 消息的发布是指某个生产者向某个topic发送消息，消息的订阅是"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/posts/rocketmq/rocketmq%E7%89%B9%E6%80%A7/" /><link rel="prev" href="http://example.org/posts/docker/docker%E5%85%A5%E9%97%A8/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "RcoketMQ入门（2）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/posts\/rocketmq\/rocketmq%E7%89%B9%E6%80%A7\/"
+        },"genre": "posts","keywords": "MQ, learning","wordcount":  2632 ,
+        "url": "http:\/\/example.org\/posts\/rocketmq\/rocketmq%E7%89%B9%E6%80%A7\/","datePublished": "2022-07-25T00:00:00+00:00","dateModified": "2022-07-25T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "steins"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="steins‘s tech">My cool site</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="steins‘s tech">My cool site</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">RcoketMQ入门（2）</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>steins</a></span>&nbsp;<span class="post-category">included in <a href="/categories/rocketmq/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>RocketMQ</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-25">2022-07-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2632 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#订阅与发布">订阅与发布</a></li>
+    <li><a href="#消息顺序">消息顺序</a></li>
+    <li><a href="#消息过滤">消息过滤</a></li>
+    <li><a href="#消息可靠性">消息可靠性</a></li>
+    <li><a href="#至少一次">至少一次</a></li>
+    <li><a href="#回溯消费">回溯消费</a></li>
+    <li><a href="#事务消息">事务消息</a></li>
+    <li><a href="#定时消息">定时消息</a></li>
+    <li><a href="#消息重试">消息重试</a></li>
+    <li><a href="#消息重投">消息重投</a></li>
+    <li><a href="#流量控制">流量控制</a>
+      <ul>
+        <li><a href="#生产者流控">生产者流控：</a></li>
+        <li><a href="#消费者流控">消费者流控</a></li>
+      </ul>
+    </li>
+    <li><a href="#死信队列">死信队列</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><ol>
+<li>
+<h1 id="rocketmq使用场景">RocketMQ使用场景</h1>
+<ol>
+<li>应用解耦</li>
+<li>流量削峰</li>
+<li>数据分发</li>
+</ol>
+</li>
+<li>
+<h1 id="rocketmq特性">RocketMQ特性</h1>
+<ol>
+<li>
+<h2 id="订阅与发布">订阅与发布</h2>
+<ol>
+<li>消息的发布是指某个生产者向某个topic发送消息，消息的订阅是指某个消费者关注了某个topic中带有某些tag的消息</li>
+</ol>
+</li>
+<li>
+<h2 id="消息顺序">消息顺序</h2>
+<ol>
+<li>消息有序指的是一类消息消费时，能按照发送的顺序来消费。例如：一个订单产生了三条消息实在Broker端实现订单创建，订单付款，订单完成，消费时要按照这个顺序消费才有意义，但是同时订单之间是可以并行消费的，RocketMQ可以严格的保证消息有序</li>
+</ol>
+</li>
+<li>
+<h2 id="消息过滤">消息过滤</h2>
+<ol>
+<li>RocketMQ的消费者可以按照Tag进行消息过滤，也支持自定义属性过滤，消息过滤目前是在Broker段实现的，优点是缺少了对于consumer无用消息的网络传输，缺点是增加了Broker的负担，并且实现复杂</li>
+</ol>
+</li>
+<li>
+<h2 id="消息可靠性">消息可靠性</h2>
+<ol>
+<li>RocketMQ支持消息的高可靠，影响消息可靠性的几种情况：
+<ol>
+<li>Broker非正常关闭</li>
+<li>Broker异常Crash</li>
+<li>OS Crash</li>
+<li>机器断电，但是能立即恢复</li>
+<li>机器无法开机，硬件损坏</li>
+<li>磁盘设备损坏</li>
+</ol>
+</li>
+<li>1，2，3，4四种情况属于硬件资源可立即恢复情况，RocketMQ在这四种情况下能保证消息不丢，或者丢失少量数据（依赖刷盘方式是同步还是异步）</li>
+<li>5，6属于单点故障，无法恢复，一旦发生，在此单点上的消息全部丢失</li>
+<li>RocketMQ在这两种情况下，通过异步复制可保证99%的消息不丢</li>
+<li>通过同步双写技术可以完全避免单点，不过会影响性能</li>
+</ol>
+</li>
+<li>
+<h2 id="至少一次">至少一次</h2>
+<ol>
+<li>每个消息必须投递一次，Consumer先pull消息到本地，消费完成后，才向服务器返回ack</li>
+</ol>
+</li>
+<li>
+<h2 id="回溯消费">回溯消费</h2>
+<ol>
+<li>回溯消费是指Consumer已经消费成功的消息，由于业务上需求需要重新消费，要支持此功能，Broker在向Consumer投递成功消息后，消息任然需要保留，并且重新消费一般按照时间维度，由于Consumer系统故障，恢复后需要重新消费1小时前的数据，那么Broker需要提供一种机制可以按照时间维度来回退消费进度</li>
+</ol>
+</li>
+<li>
+<h2 id="事务消息">事务消息</h2>
+<ol>
+<li>RocketMQ事务消息是指应用本地事务和发送消息操作可以被定义到全局事务中，要么同时成功，要么同时失败</li>
+</ol>
+</li>
+<li>
+<h2 id="定时消息">定时消息</h2>
+<ol>
+<li>定时消息是指消息发送到Broker中不会立即消费，等待特定时间投递给真正的topic</li>
+</ol>
+</li>
+<li>
+<h2 id="消息重试">消息重试</h2>
+<ol>
+<li>Consumer消费消息失败后，要提供一种重试机制，令消息在消费一次，Consumer消费消息失败通常可以分为一下几种情况：
+<ol>
+<li>由于消息本身的原因，例如反序列化失败，消息数据本身无法处理，这种消息即使立刻重试消费，99%也不成功，因此最好提供一种定时重试机制，即过10秒后再重试</li>
+<li>由于依赖的下游应用服务不可用，例如db连接不可用，这时即使跳过当前失败的消息，消费其他消息也会报错，这种情况应该应用sleep 30s，在消费下一条消息，这样可以减轻Broker重试消息的压力</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h2 id="消息重投">消息重投</h2>
+<ol>
+<li>生产者在发送消息时：
+<ol>
+<li>同步消息失败会重投</li>
+<li>异步消息有重试</li>
+</ol>
+</li>
+<li>消息重投保证消息尽可能发送成功，不丢失，但可能会造成消息重复，消息重复在RocketMQ是无法避免的问题，当出现消息量大，网路抖动，消息重复就会是大概率事件。另外，生产者主动重发，consumer负载变化也会导致重复消息</li>
+<li>消息重复策略设置：
+<ol>
+<li>retryTimesWhenSendFailed同步发送失败，默认为2，因此生产者会最多尝试发送retryTimesWhenSendFailed+1次，不会选择上次失败的broker，尝试向其他broker发送，最大程度保证消息不丢失。超过重投次数，抛异常，由客户端保证消息不丢失</li>
+<li>retryTimesWhenSendSyncFailed：异步发送失败重试次数，异步重试不会选择其他broker，仅在同一个broker上做重试，不保证消息不丢</li>
+<li>retryAnotherBrokerWhenNotStoreOK：消息刷盘超时或slave不可用，是否尝试发送到其他broker，默认false，十分重要消息可以开启</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h2 id="流量控制">流量控制</h2>
+<ol>
+<li>
+<p>生产者流控：broker处理能力达到瓶颈；消费者流控：消费能力达到瓶颈</p>
+<ol>
+<li>
+<h3 id="生产者流控">生产者流控：</h3>
+<ol>
+<li>commitLog文件被锁时间超过osPageCacheBusyTimeOutMills时，参数默认是1000ms，发生流控</li>
+<li>如果开启transientStorePoolEnable=true，且broker为异步刷盘的主机，且transientStorePool中资源不足，拒绝当前send请求，发生流控</li>
+<li>broker每隔10ms检查send请求队列头部请求的等待时间，如果超过waitTimeMillsInSendQueue，默认200ms，拒绝当前send请求，发生流控</li>
+<li>broker通过拒绝send请求方式实现流量控制</li>
+</ol>
+</li>
+<li>
+<h3 id="消费者流控">消费者流控</h3>
+<ol>
+<li>消费者本地缓存消息超过pullThresholdForQueue时，默认1000</li>
+<li>消费者本地缓存消息大小超过pullThresholdSizeForQueue时，默认100MB</li>
+<li>消费者本地缓存消息跨度超过consumeConcurrentlyMaxSpan时，默认2000</li>
+<li>消费者流控的结果是降低拉取频率</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h2 id="死信队列">死信队列</h2>
+<ol>
+<li>死信队列用于处理无法被正常消费的消息，</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h1 id="消费模式push-or-pull">消费模式Push or Pull</h1>
+<ol>
+<li>
+<p>RocketMq消息订阅有两种模式，一种是Push，即MQServer主动向消费端推送，另外一种是Pull模式，即消费端需要时，主动到MQ Server拉取，当在具体实现中，Push和Pull模式本质都是采用消费端主动拉取的方式，即consumer轮询从broker拉取消息</p>
+</li>
+<li>
+<h4 id="push模式特点">Push模式特点</h4>
+<ol>
+<li>好处是实时性高，缺点是消费端的处理能力有限，当瞬间推送很多消息给消费端时，容易造成消费端的消息积压，严重时会压垮客户端</li>
+</ol>
+</li>
+<li>
+<h4 id="pull模式特点">Pull模式特点</h4>
+<ol>
+<li>好处是主动权掌握在消费端自己手中，根据自己的处理能力量力而行，缺点是如何控制Pull的频率，定时间隔太久担心影响实效性，间隔太短担心做太多无用功浪费资源，比较这种的方法就是长轮询</li>
+</ol>
+</li>
+<li>
+<h4 id="push和pull的区别">Push和Pull的区别</h4>
+<ol>
+<li>Push中，consumer把长轮询的动作封装了，并注册MessageListener监听器，取到消息后，唤醒MessageListener的consumeMessage来消费，对用户而言，感觉消息是被推送过来的</li>
+<li>Pull中，取消息的过程需要用户主动调用，首先通过打算消费的Topic拿到MessageQueue的集合，便利MessageQueue集合，然后针对每个MessageQueue批量取消息，一次取完后，记录该队列下一次要取的开始offset，知道取完了，再换另一个MessageQueue</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-07-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://example.org/posts/rocketmq/rocketmq%E7%89%B9%E6%80%A7/" data-title="RcoketMQ入门（2）" data-hashtags="MQ,learning"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://example.org/posts/rocketmq/rocketmq%E7%89%B9%E6%80%A7/" data-hashtag="MQ"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://example.org/posts/rocketmq/rocketmq%E7%89%B9%E6%80%A7/" data-title="RcoketMQ入门（2）"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://example.org/posts/rocketmq/rocketmq%E7%89%B9%E6%80%A7/" data-title="RcoketMQ入门（2）"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.0.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://example.org/posts/rocketmq/rocketmq%E7%89%B9%E6%80%A7/" data-title="RcoketMQ入门（2）"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/mq/">MQ</a>,&nbsp;<a href="/tags/learning/">learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/docker/docker%E5%85%A5%E9%97%A8/" class="prev" rel="prev" title="Docker入门"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Docker入门</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">steins</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
