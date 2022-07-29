@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>nio - Category - steins‘s tech</title>
+        <link>http://example.org/categories/nio/</link>
+        <description>nio - Category - steins‘s tech</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wbw3217@outlook.com (steins)</managingEditor>
+            <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Thu, 21 Jul 2022 10:06:26 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/nio/" rel="self" type="application/rss+xml" /><item>
+    <title>Docker入门</title>
+    <link>http://example.org/posts/nettynio/java-nio%E5%85%A5%E9%97%A8%E7%BC%93%E5%86%B2%E5%8C%BA/</link>
+    <pubDate>Thu, 21 Jul 2022 10:06:26 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>http://example.org/posts/nettynio/java-nio%E5%85%A5%E9%97%A8%E7%BC%93%E5%86%B2%E5%8C%BA/</guid>
+    <description><![CDATA[Buffer Buffer对象可以看做一个固定数量的数据的容器，其作用是一个存储器。缓冲区和通道紧密联系。通道是I/O传输发生时通过的入口，而缓冲区是数]]></description>
+</item>
+</channel>
+</rss>

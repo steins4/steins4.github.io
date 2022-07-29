@@ -23,6 +23,14 @@
     <description><![CDATA[Docker入门 镜像和容器 image镜像 Docker image是一个read-only文件 这个文件包含文件系统，源码，库文件，依赖，工具等一些运行ap]]></description>
 </item>
 <item>
+    <title>Docker入门</title>
+    <link>http://example.org/posts/nettynio/java-nio%E5%85%A5%E9%97%A8%E7%BC%93%E5%86%B2%E5%8C%BA/</link>
+    <pubDate>Thu, 21 Jul 2022 10:06:26 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>http://example.org/posts/nettynio/java-nio%E5%85%A5%E9%97%A8%E7%BC%93%E5%86%B2%E5%8C%BA/</guid>
+    <description><![CDATA[Buffer Buffer对象可以看做一个固定数量的数据的容器，其作用是一个存储器。缓冲区和通道紧密联系。通道是I/O传输发生时通过的入口，而缓冲区是数]]></description>
+</item>
+<item>
     <title>RocketMQ入门（1）：架构和设计</title>
     <link>http://example.org/posts/rocketmq/rocketmq%E5%85%A5%E9%97%A81%E6%9E%B6%E6%9E%84%E5%92%8C%E8%AE%BE%E8%AE%A1/</link>
     <pubDate>Thu, 14 Jul 2022 17:08:37 &#43;0800</pubDate>
