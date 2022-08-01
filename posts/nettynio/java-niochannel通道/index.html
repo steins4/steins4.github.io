@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Java NIO：channel通道 - steins‘s tech</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="Java NIO：channel通道" />
+<meta property="og:description" content="通道基础 从Channel接口引申出的其他接口都是面向字节的自接口，包括WritableByteChannel和ReadableByteCha" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/posts/nettynio/java-niochannel%E9%80%9A%E9%81%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-21T10:06:26+08:00" />
+<meta property="article:modified_time" content="2022-07-21T10:06:26+08:00" /><meta property="og:site_name" content="My cool site" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java NIO：channel通道"/>
+<meta name="twitter:description" content="通道基础 从Channel接口引申出的其他接口都是面向字节的自接口，包括WritableByteChannel和ReadableByteCha"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/posts/nettynio/java-niochannel%E9%80%9A%E9%81%93/" /><link rel="prev" href="http://example.org/posts/rocketmq/rocketmq%E5%85%A5%E9%97%A81%E6%9E%B6%E6%9E%84%E5%92%8C%E8%AE%BE%E8%AE%A1/" /><link rel="next" href="http://example.org/posts/nettynio/java-nio%E5%85%A5%E9%97%A8%E7%BC%93%E5%86%B2%E5%8C%BA/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Java NIO：channel通道",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/posts\/nettynio\/java-niochannel%E9%80%9A%E9%81%93\/"
+        },"genre": "posts","keywords": "网络, learning","wordcount":  4161 ,
+        "url": "http:\/\/example.org\/posts\/nettynio\/java-niochannel%E9%80%9A%E9%81%93\/","datePublished": "2022-07-21T10:06:26+08:00","dateModified": "2022-07-21T10:06:26+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "steins"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="steins‘s tech">My cool site</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="steins‘s tech">My cool site</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Java NIO：channel通道</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>steins</a></span>&nbsp;<span class="post-category">included in <a href="/categories/nio/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>nio</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-21">2022-07-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4161 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#使用通道">使用通道</a>
+      <ul>
+        <li><a href="#bytechannel接口">ByteChannel接口</a></li>
+        <li><a href="#image-20220731214912435httpssteins-typora-picturesoss-cn-shanghaialiyuncscomupicimage-20220731214912435png"><img src="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731214912435.png" alt="image-20220731214912435"></a></li>
+      </ul>
+    </li>
+    <li><a href="#关闭通道">关闭通道</a>
+      <ul>
+        <li><a href="#isopen">isOpen()：</a></li>
+      </ul>
+    </li>
+    <li><a href="#scattergather">Scatter/Gather</a></li>
+    <li><a href="#文件通道">文件通道</a>
+      <ul>
+        <li><a href="#访问文件">访问文件</a></li>
+        <li><a href="#文件锁定">文件锁定</a></li>
+        <li><a href="#内存映射文件">内存映射文件</a></li>
+      </ul>
+    </li>
+    <li><a href="#socket通道">Socket通道</a>
+      <ul>
+        <li><a href="#非阻塞模式">非阻塞模式</a></li>
+        <li><a href="#serversocketchannel"><code>ServerSocketChannel</code>：</a></li>
+        <li><a href="#socketchannel"><code>SocketChannel</code></a></li>
+        <li><a href="#datagramchannel"><code>DatagramChannel</code></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><ol>
+<li>
+<h1 id="通道基础">通道基础</h1>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731213523825.png"
+        data-srcset="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731213523825.png, https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731213523825.png 1.5x, https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731213523825.png 2x"
+        data-sizes="auto"
+        alt="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731213523825.png"
+        title="image-20220731213523825" /></p>
+<ol>
+<li>
+<p>从Channel接口引申出的其他接口都是面向字节的自接口，包括<code>WritableByteChannel</code>和<code>ReadableByteChannel</code>。通道只能在字节缓冲区上操作。</p>
+</li>
+<li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">SocketChannel</span> <span class="n">sc</span> <span class="o">=</span> <span class="n">SocketChannel</span><span class="o">.</span><span class="na">open</span><span class="o">(</span> <span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">sc</span><span class="o">.</span><span class="na">connect</span> <span class="o">(</span><span class="k">new</span> <span class="n">InetSocketAddress</span> <span class="o">(</span><span class="s">&#34;somehost&#34;</span><span class="o">,</span> <span class="n">someport</span><span class="o">));</span> <span class="n">ServerSocketChannel</span> <span class="n">ssc</span> <span class="o">=</span> <span class="n">ServerSocketChannel</span><span class="o">.</span><span class="na">open</span><span class="o">(</span> <span class="o">);</span> <span class="n">ssc</span><span class="o">.</span><span class="na">socket</span><span class="o">(</span> <span class="o">).</span><span class="na">bind</span> <span class="o">(</span><span class="k">new</span> <span class="n">InetSocketAddress</span> <span class="o">(</span><span class="n">somelocalport</span><span class="o">));</span> <span class="n">DatagramChannel</span> <span class="n">dc</span> <span class="o">=</span> <span class="n">DatagramChannel</span><span class="o">.</span><span class="na">open</span><span class="o">(</span> <span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">RandomAccessFile</span> <span class="n">raf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RandomAccessFile</span> <span class="o">(</span><span class="s">&#34;somefile&#34;</span><span class="o">,</span> <span class="s">&#34;r&#34;</span><span class="o">);</span> <span class="n">FileChannel</span> <span class="n">fc</span> <span class="o">=</span> <span class="n">raf</span><span class="o">.</span><span class="na">getChannel</span><span class="o">(</span> <span class="o">);</span>
+</span></span></code></pre></div></li>
+<li>
+<p><code>RandomAccessFile.getChannel()</code>方法只有在通道存在的时候才返回一个socket关联的通道。它们永远不会创建新通道。</p>
+</li>
+<li>
+<h2 id="使用通道">使用通道</h2>
+<ol>
+<li>
+<h3 id="bytechannel接口">ByteChannel接口</h3>
+<h3 id="image-20220731214912435httpssteins-typora-picturesoss-cn-shanghaialiyuncscomupicimage-20220731214912435png"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731214912435.png"
+        data-srcset="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731214912435.png, https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731214912435.png 1.5x, https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731214912435.png 2x"
+        data-sizes="auto"
+        alt="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731214912435.png"
+        title="image-20220731214912435" /></h3>
+</li>
+<li>
+<p>通道可以以阻塞或非阻塞模式运行。非阻塞模式的通道永远不会让调用的线程休眠。请求的操作要么立即完成，要么返回一个结果表明未进行任何操作。只有面向流的（stream-oriented）的通道，如 sockets 和 pipes 才能使用非阻塞模式。</p>
+</li>
+</ol>
+</li>
+<li>
+<h2 id="关闭通道">关闭通道</h2>
+<ol>
+<li>
+<h3 id="isopen">isOpen()：</h3>
+<ol>
+<li>如果返回true，表示该通道可以使用，如果返回false，表示该通道已关闭，不能再被使用</li>
+<li>在一个通道多次调用close()方法是没有坏处的，但是如果第一个线程在close()方法中阻塞，那么在它关闭通道之前，其它任何调用close()方法都会阻塞。在已关闭的通道上调用close()不会产生任何操作，只会立即返回。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h2 id="scattergather">Scatter/Gather</h2>
+<ol>
+<li>
+<p>它是在多个缓冲区实现一个简单的I/O操作，对于一个write操作而言，数据是从几个缓冲区按顺序抽取(gather)并沿着通道发送的。对于read操作而言，从通道读取的数据会按顺序被散布(scatter)到多个缓冲区</p>
+</li>
+<li>
+<p>接口</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731223726412.png"
+        data-srcset="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731223726412.png, https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731223726412.png 1.5x, https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731223726412.png 2x"
+        data-sizes="auto"
+        alt="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220731223726412.png"
+        title="image-20220731223726412" /></p>
+</li>
+<li>
+<p>offset，length</p>
+<ol>
+<li>offset表示哪个缓冲区将开始被使用，length表示要使用的缓冲区数量</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h2 id="文件通道">文件通道</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220801100309912.png"
+        data-srcset="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220801100309912.png, https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220801100309912.png 1.5x, https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220801100309912.png 2x"
+        data-sizes="auto"
+        alt="https://steins-typora-pictures.oss-cn-shanghai.aliyuncs.com/uPic/image-20220801100309912.png"
+        title="image-20220801100309912" /></p>
+<ol>
+<li>
+<p>文件通道总是阻塞式的，FileChannel对象是线程安全的。不过影响通道位置或者影响文件大小的操作都是单线程的</p>
+</li>
+<li>
+<h3 id="访问文件">访问文件</h3>
+<ol>
+<li><code>public abstract long position()</code>:返回当前文件的position值，返回值是一个长整型，表示文件中的当前字节位置</li>
+<li><code>public abstract void position(long newPosition)</code>：将通道的position设置为指定值
+<ol>
+<li>position不能为负值，如果position设置了超出文件尾，这样会把position设为指定值而不改变文件大小。如果此时实现了read方法，会返回（end-of-file），如果此时实现的是一个write()方法，则会引起文件增长以容纳写入的字节，可能导致出现文件空洞</li>
+</ol>
+</li>
+<li>当字节被read()或write()时，文件position会自动更新。如果position达到了文件大小的值，read()方法会返回文件尾条件值(-1)，如果实现write方法()时position前进到超过文件大小的值，该文件会扩展以容纳新写入的字节</li>
+<li>truncate()：会砍掉所指定的新size值之外的所有数据，文件的position会被设置为所提供的新size值</li>
+<li><code>force(boolean metaData)</code>:要求文件的所有待定修改立即同步到磁盘
+<ol>
+<li>如果文件位于一个本地文件系统，那么一旦修改force()方法返回，即可保证从通道被创建时对文件所做的修改已经被写入到磁盘，可以保证数据完整性和可靠的恢复。如果文件位于一个远程的文件系统，那么不能保证待定修改一定能同步到永久存储器上。</li>
+<li>方法的布尔型参数表示在方法返回值前文件的元数据是否也要被同步更新到磁盘。元数据指文件所有者，访问权限，最后一次修改时间等信息。给force()传递false值表示在方法返回前只需要同步文件数据的更改。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h3 id="文件锁定">文件锁定</h3>
+<ol>
+<li>
+<p><code>public abstract FileLock lock(long position, long size, boolean shared)</code>:</p>
+<ol>
+<li>会指定文件内部锁定区域的开始position以及锁定区域的size，第三个参数shared表示向获取的锁是共享的(true)还是独占的(false),</li>
+</ol>
+</li>
+<li>
+<p>lock():等价于lock(0L, Long.MAX_VALUE, false)</p>
+</li>
+<li>
+<p>tryLock()：和lock()方法有一样的作用，不过如果请求的锁不能立即获取到则会返回一个null</p>
+</li>
+<li>
+<h4 id="filelock对象">FileLock对象：</h4>
+<ol>
+<li>lock()和tryLock()均返回一个FileLock对象，</li>
+<li>channel()：查询一个lock对象以判断它是由哪个通道创建的</li>
+<li>一个FileLock对象创建之后即有效，知道它的release()方法被调用才会失效，可以通过调用isValid来测试一个锁的有效性。一个锁的有效性可能会随着时间而改变，不过它的其他属性——position，size和独占性(exclusivity)不会随着时间而改变。</li>
+<li>isShared():判断一个锁是独占还是共享的</li>
+<li>overlaps()：查询一个FIleLock对象是否与一个指定的文件区域重叠</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h3 id="内存映射文件">内存映射文件</h3>
+<ol>
+<li>
+<p><code>public abstract MappedByteBuffer map(MapMode mapMode, long position, long size)</code>：通过FileChannel的map()方法来创建一个文件映射，它的参数有MapMode，position，size.我们可以创建一个MapppedByteBuffer来代表一个文件中字节的某个子范围。映射范围不能超过文件的实际大小</p>
+</li>
+<li>
+<p>文件的映射可以是可写的或只读的。请求的映射模式将受被调用map()方法的FileChannel对象的访问权限所限制。</p>
+</li>
+<li>
+<p>MapMode.PRIVATE表示您想要一个写时拷贝的映射，这意味着通过put()方法所做的任何修改都会导致一个私有的数据拷贝并且该拷贝中的数据只有MappedByteBuffer实例可以看到，任何修改不会回刷到文件中</p>
+</li>
+<li>
+<p>load()：加载整个文件以使它常驻内存</p>
+</li>
+<li>
+<p>isLoaded():判断一个被映射的文件是否完全常驻内存了。如果该方法返回 true 值，那么很大概率是映射缓冲区的访问延迟很少或者根本没有延迟。不过，这也是不能保证的。同样地，返回 false 值并不一定意味着访问缓冲区将很慢或者该文件并未完全常驻内存。</p>
+</li>
+<li>
+<p>force()：强制将映射缓冲区上的更改应用到永久磁盘存储器上。如果映射是以 MapMode.READ_ONLY 或 MAP_MODE.PRIVATE 模式建立的，那么调用 <em>force(</em> <em>)</em> 方法将不起任何作用，因为永远不会有更改需要应用到磁盘上（但是这样做也是没有害处的）。</p>
+</li>
+<li>
+<h4 id="channel-to-channel传输">Channel-to-Channel传输</h4>
+<ol>
+<li><code>transferTo(long position, long count, WritableByteChannel target)</code>, <code>transferFrom(ReadableByteBuffer src, long position, long count)</code>:transferTo()和transferFrom()方法允许一个通道交叉连接到另一个通道，只有FileChannel类有这两个方法，因此channel-to-channel传输中通道之一必须是FileChannel。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h2 id="socket通道">Socket通道</h2>
+<p>socket通道类分为DatagramChannel，SocketChannel和ServerSocketChannel三种，其中DatagramChannel和SocketChannel实现定义读和写功能的接口而ServerSocketChannel不实现。ServerSocketChannel负责监听传入的连接和创建新的SocketChannel对象，它本身从不传输数据。</p>
+<ol>
+<li>
+<h3 id="非阻塞模式">非阻塞模式</h3>
+<ol>
+<li>要把一个socket通道置于阻塞模式，需要依靠所有socket通道类的共有超级类：SelectableChannel。
+<ol>
+<li>
+<p><code>public abstract void configureBlocking(boolean block)</code>：传递参数true则设为阻塞模式</p>
+</li>
+<li>
+<p><code>public sbatract boolean isBlocking</code></p>
+</li>
+<li>
+<p><code>public abstract Object blockingLock()</code>：</p>
+<ol>
+<li>为了防止socket通道的阻塞模式被修改，该方法返回一个非透明的对象引用。返回的对象是通过实现修改阻塞模式时内部使用的，只有拥有此对象的锁的线程才能更改通道的阻塞模式。</li>
+</ol>
+</li>
+<li>
+<p>非阻塞I/O和可选择性是紧密关联的</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h3 id="serversocketchannel"><code>ServerSocketChannel</code>：</h3>
+<ol>
+<li>open():创建一个新的ServerSocketChannel对象，将会返回一个未绑定的java.net.ServerSocket关联的通道</li>
+<li>socket()：取出相应的ServerSocket并使用它来绑定到一个端口以开始监听连接</li>
+<li>accept()：如果选择在ServerSocket上调用accept()方法，它总是阻塞并返回一个java.net.Socket对象，如果选择在ServerSocketChannel上调用accept()方法则会返回SocketChannel类型的对象，返回的对象能够在非阻塞模式下运行。</li>
+</ol>
+</li>
+<li>
+<h3 id="socketchannel"><code>SocketChannel</code></h3>
+<p>每个SocketChannel对象创建时都是同一个对等的java.net.Socket独享串联的。静态的open()方法可以创建一个新的SocketChannel对象，而在新创建的SocketChannel上调用socket()方法能返回它对等的Socket对象；在该Socket上调用getChannel()方法能返回最初的那个SocketChannel</p>
+<ol>
+<li>
+<h6 id="假如在一个非阻塞模式的-socketchannel-对象上调用-finishconnect-方法将可能出现下列情形之一">假如在一个非阻塞模式的 <em>SocketChannel</em> 对象上调用 <em>finishConnect(</em> *)*方法，将可能出现下列情形之一：</h6>
+<ol>
+<li>
+<h6 id="connect-方法尚未被调用那么将产生-noconnectionpendingexception-异常"><em>connect(</em> *)*方法尚未被调用。那么将产生 <em>NoConnectionPendingException</em> 异常。</h6>
+</li>
+<li>
+<h6 id="连接建立过程正在进行尚未完成那么什么都不会发生finishconnect-方法会立即返回false值">连接建立过程正在进行，尚未完成。那么什么都不会发生，<em>finishConnect(</em> *)*方法会立即返回false值</h6>
+</li>
+<li>
+<h6 id="在非阻塞模式下调用-connect-方法之后socketchannel-又被切换回了阻塞模式那么如果有必要的话调用线程会阻ຎ直到连接建立完成finishconnect-方法接着就会返回-true值">在非阻塞模式下调用 <em>connect(</em> *)*方法之后，<em>SocketChannel</em> 又被切换回了阻塞模式。那么如果有必要的话，调用线程会阻ຎ直到连接建立完成，<em>finishConnect(</em> *)*方法接着就会返回 true值</h6>
+</li>
+<li>
+<h6 id="在初次调用-connect-或最后一次调用-finishconnect-之后连接建立过程已经完成那么socketchannel-对象的内部状态将被更新到已连接状态finishconnect-方法会返回-true值然后-socketchannel-对象就可以被用来传输数据了">在初次调用 <em>connect(</em> *)*或最后一次调用 <em>finishConnect(</em> <em>)<em>之后，连接建立过程已经完成。那么</em>SocketChannel</em> 对象的内部状态将被更新到已连接状态，<em>finishConnect(</em> *)*方法会返回 true值，然后 <em>SocketChannel</em> 对象就可以被用来传输数据了。</h6>
+</li>
+<li>
+<h6 id="连接已经建立那么什么都不会发生finishconnect-方法会返回-true-值">连接已经建立。那么什么都不会发生，<em>finishConnect(</em> *)*方法会返回 true 值。</h6>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h3 id="datagramchannel"><code>DatagramChannel</code></h3>
+<p>DatagramChannel模拟包导向的无连接协议(UDP/IP)</p>
+<ol>
+<li>
+<h5 id="open">open()</h5>
+<ol>
+<li>调用静态的open()方法来创建DatagramChannel实例</li>
+</ol>
+</li>
+<li>
+<p>数据的实际发送和接收是通过send()和receive()方法来实现的</p>
+</li>
+<li>
+<p><code>public abstract SocketAddress receive(ByteBuffer dst)</code>:</p>
+<ol>
+<li><em>receive(</em> *)*方法将下次将传入的数据报的数据复制到预备好的 ByteBuffer 中并返回一个 <em>SocketAddress</em> 对象以指出数据来源。</li>
+<li>如果通道处于阻塞模式，<em>receive(</em> *)*可能无限期地休眠直到有包 到达。如果是非阻塞模式，当没有可接收的包时则会返回 null。</li>
+<li>如果包内的数据超出缓冲区能承受的范围，多出的数据都会被悄悄地抛弃。</li>
+</ol>
+</li>
+<li>
+<p><code>public abstract int send (ByteBuffer src, SocketAddress target)</code>:</p>
+<ol>
+<li>调用 <em>send(</em> *)*会发送给定 <em>ByteBuffer</em> 对象的内容到给定 <em>SocketAddress</em> 对象所描述的目的地址和端 口，内容范围为从当前 position 开始到末尾处束。</li>
+<li>如果 <em>DatagramChannel</em> 对象处于阻塞模式，调用线程可能会休眠直到数据报被加入传输队列。</li>
+<li>如果通道是非阻塞的，返回值要么是字节缓冲区的 字节数，要么是“0”。发送数据报是一个全有或全无（all-or-nothing）的行为。如果传输队列没有足够空间来承载整个数据报，那么什么内容都不会被发送。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-07-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://example.org/posts/nettynio/java-niochannel%E9%80%9A%E9%81%93/" data-title="Java NIO：channel通道" data-hashtags="网络,learning"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://example.org/posts/nettynio/java-niochannel%E9%80%9A%E9%81%93/" data-hashtag="网络"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://example.org/posts/nettynio/java-niochannel%E9%80%9A%E9%81%93/" data-title="Java NIO：channel通道"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://example.org/posts/nettynio/java-niochannel%E9%80%9A%E9%81%93/" data-title="Java NIO：channel通道"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.0.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://example.org/posts/nettynio/java-niochannel%E9%80%9A%E9%81%93/" data-title="Java NIO：channel通道"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E7%BD%91%E7%BB%9C/">网络</a>,&nbsp;<a href="/tags/learning/">learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/rocketmq/rocketmq%E5%85%A5%E9%97%A81%E6%9E%B6%E6%9E%84%E5%92%8C%E8%AE%BE%E8%AE%A1/" class="prev" rel="prev" title="RocketMQ入门（1）：架构和设计"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>RocketMQ入门（1）：架构和设计</a>
+            <a href="/posts/nettynio/java-nio%E5%85%A5%E9%97%A8%E7%BC%93%E5%86%B2%E5%8C%BA/" class="next" rel="next" title="Java NIO：buffer缓冲区">Java NIO：buffer缓冲区<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">steins</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

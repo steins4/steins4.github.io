@@ -5,12 +5,20 @@
         <description>网络 - Tag - steins‘s tech</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wbw3217@outlook.com (steins)</managingEditor>
             <webMaster>wbw3217@outlook.com (steins)</webMaster><lastBuildDate>Thu, 21 Jul 2022 10:06:26 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E7%BD%91%E7%BB%9C/" rel="self" type="application/rss+xml" /><item>
-    <title>Docker入门</title>
+    <title>Java NIO：buffer缓冲区</title>
     <link>http://example.org/posts/nettynio/java-nio%E5%85%A5%E9%97%A8%E7%BC%93%E5%86%B2%E5%8C%BA/</link>
     <pubDate>Thu, 21 Jul 2022 10:06:26 &#43;0800</pubDate>
     <author>steins</author>
     <guid>http://example.org/posts/nettynio/java-nio%E5%85%A5%E9%97%A8%E7%BC%93%E5%86%B2%E5%8C%BA/</guid>
     <description><![CDATA[Buffer Buffer对象可以看做一个固定数量的数据的容器，其作用是一个存储器。缓冲区和通道紧密联系。通道是I/O传输发生时通过的入口，而缓冲区是数]]></description>
+</item>
+<item>
+    <title>Java NIO：channel通道</title>
+    <link>http://example.org/posts/nettynio/java-niochannel%E9%80%9A%E9%81%93/</link>
+    <pubDate>Thu, 21 Jul 2022 10:06:26 &#43;0800</pubDate>
+    <author>steins</author>
+    <guid>http://example.org/posts/nettynio/java-niochannel%E9%80%9A%E9%81%93/</guid>
+    <description><![CDATA[通道基础 从Channel接口引申出的其他接口都是面向字节的自接口，包括WritableByteChannel和ReadableByteCha]]></description>
 </item>
 </channel>
 </rss>
